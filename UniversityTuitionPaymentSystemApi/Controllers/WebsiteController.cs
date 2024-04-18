@@ -27,8 +27,10 @@ namespace UniversityTuitionPaymentSystemApi.Controllers
                 return NotFound("Student not found");
 
 
+            var existingTuition = _context.Tuitions.FirstOrDefault(t => t.StudentId == student.Id && t.Term == model.Term);
+            if (existingTuition != null)
+                return Conflict("Tuition already added for this term");
 
-           
             _context.Tuitions.Add(new Tuition
             {
                 StudentId = student.Id,
